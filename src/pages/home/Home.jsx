@@ -1,64 +1,39 @@
-import { lazy, Suspense, useEffect, useState } from "react";
-import Input from "../../components/input/Input";
-const Button = lazy(() =>
-  import(/* webpackChunkName: 'button' */ "../../components/button/Button")
-);
+import { useState } from "react";
+import { TextField, Button } from "@material-ui/core";
+import List from "../../components/Todo/List";
 
 export default function Home() {
-  const [input, setInput] = useState("");
-  const [count, setCount] = useState(0);
-  const [flag, setFlag] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [todoList, setTodoList] = useState([]);
 
-  // input.length > 10 && button 5 time => flag = true
-  // !dependency array => useEffect executes on every change
-  // empty dependency array => executes only once during component initialization => api calls
-  // dependency array has values => executes only once when value changes
-  useEffect(() => {
-    if (input.length > 10 && count === 5) {
-      setFlag(true);
-    } else {
-      setFlag(false);
-    }
-    return () => {
-      console.log("cleanup");
-    };
-  }, [input, count]);
-
-  function handleSubmit(event) {
-    alert(input);
+  function handleAddTodo(e) {
+    e.stopPropagation();
+    const length = todoList.length;
+    setTodoList(todoList.concat([{ id: length, text: inputValue }]));
+    setInputValue("");
   }
 
-  // input -> enter
-  // button -> add -> list
-
-  // list =>
-  // name <x>
-  //
+  function handleDeleteTodo(todo) {
+    setTodoList(todoList.filter((t) => t.id !== todo.id));
+  }
 
   return (
-    <div>
-      <Input value={input} setValue={setInput} />
-      <Suspense fallback={<div>Loading...</div>}>
-        <Button value={count} setValue={setCount} />
-      </Suspense>
-
-      <p>
-        {input || "Button"} is clicked: {count} times
-      </p>
-
-      {flag && <p>True</p>}
-
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+    <div className="container mx-auto">
+      <h1 className="text-5xl font-extrabold">TODO</h1>
+      <div className="flex items-center">
+        <TextField
+          label="Todo"
+          value={inputValue}
+          onChange={(event) => setInputValue(event.target.value)}
+          size="small"
+        />
+        <Button variant="contained" color="secondary" onClick={handleAddTodo}>
+          Add
+        </Button>
+      </div>
+      <div>
+        <List list={todoList} />
+      </div>
     </div>
   );
 }

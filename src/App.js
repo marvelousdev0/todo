@@ -1,12 +1,14 @@
-import "./App.css";
+import { ThemeProvider } from "@material-ui/core/styles";
 import Home from "./pages/home/Home";
+import { theme } from "./theme/theme";
 
 function App() {
   return (
-    <div style={{ padding: 24 }}>
-      <h1>App</h1>
-      <Home />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div style={{ padding: 24 }}>
+        <Home />
+      </div>
+    </ThemeProvider>
   );
 }
 
