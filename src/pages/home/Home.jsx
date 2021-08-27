@@ -31,28 +31,28 @@ const ScrollingCard = styled(Card)(({ theme }) => ({
 }))
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
-	color: 'black',
+	color: theme.palette.text.primary,
 	'& label.Mui-focused': {
-		color: 'black',
+		color: theme.palette.text.primary,
 	},
 	'& .MuiInput-underline:after': {
-		borderBottomColor: 'black',
+		borderBottomColor: theme.palette.text.primary,
 	},
 	'& .MuiOutlinedInput-root': {
 		'& fieldset': {
-			color: 'black',
+			color: theme.palette.text.primary,
 			borderRadius: theme.spacing(0),
 			borderColor: grey[300],
 		},
 		'&:hover fieldset': {
-			color: 'black',
+			color: theme.palette.text.primary,
 			borderRadius: theme.spacing(0),
-			borderColor: 'black',
+			borderColor: theme.palette.text.primary,
 		},
 		'&.Mui-focused fieldset': {
-			color: 'black',
+			color: theme.palette.text.primary,
 			borderRadius: theme.spacing(0),
-			borderColor: 'black',
+			borderColor: theme.palette.text.primary,
 		},
 	},
 }))
