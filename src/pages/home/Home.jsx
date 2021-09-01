@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import {
 	Box,
 	TextField,
@@ -10,6 +10,7 @@ import {
 	Card,
 	IconButton,
 	InputAdornment,
+	Typography,
 } from '@material-ui/core'
 import { styled } from '@material-ui/core/styles'
 import {
@@ -19,6 +20,7 @@ import {
 } from '@material-ui/icons'
 import { grey } from '@material-ui/core/colors'
 import { initialTodos } from 'constants/initialTodos'
+import { UserContext } from 'context/UserContext'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 16
@@ -64,6 +66,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }))
 
 export default function Home() {
+	const {user} = useContext(UserContext);
+
 	const [inputValue, setInputValue] = useState('')
 	const [todoList, setTodoList] = useState(() => [...initialTodos])
 
@@ -91,6 +95,7 @@ export default function Home() {
 					}}
 				>
 					<Stack direction='row' spacing={2}>
+						<Typography variant='body1'>{user.name}</Typography>
 						<Box sx={{ width: { sm: 360, lg: 420 } }}>
 							<StyledTextField
 								value={inputValue}

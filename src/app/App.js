@@ -1,12 +1,15 @@
 import { useState, useMemo } from 'react'
 import { CssBaseline, Stack, useMediaQuery } from '@material-ui/core'
 import { ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles'
-import Home from 'pages/home/Home'
 import { getTheme } from 'theme/theme'
 import { ColorModeContext } from 'context/ColorModeContext'
 import Header from 'components/header/Header'
+import { routes } from 'routes'
+import { UserContext } from 'context/UserContext'
 
 function App() {
+	const [user, setUser] = useState({ name: 'John Doe' })
+
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 	const [mode, setMode] = useState('light')
 	const colorMode = useMemo(
@@ -23,17 +26,17 @@ function App() {
 		return responsiveFontSizes(getTheme(color))
 	}, [mode])
 
-	console.log(mode, myTheme)
-
 	return (
 		<ColorModeContext.Provider value={colorMode}>
-			<ThemeProvider theme={myTheme}>
-				<CssBaseline />
-				<Stack spacing={8}>
-					<Header mode={mode} />
-					<Home />
-				</Stack>
-			</ThemeProvider>
+			<UserContext.Provider value={{ user, setUser }}>
+				<ThemeProvider theme={myTheme}>
+					<CssBaseline />
+					<Stack spacing={8}>
+						<Header mode={mode} />
+						{routes}
+					</Stack>
+				</ThemeProvider>
+			</UserContext.Provider>
 		</ColorModeContext.Provider>
 	)
 }
